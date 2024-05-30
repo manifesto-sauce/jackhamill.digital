@@ -3,8 +3,6 @@ import { sanityFetch } from '@/sanity/lib/fetch'
 import { settingsQuery } from '@/sanity/queries'
 import { SettingsQueryResult } from '@/sanity/sanity-types'
 import type { Metadata } from 'next'
-import { VisualEditing } from 'next-sanity'
-import { draftMode } from 'next/headers'
 import NavBar from './NavBar'
 import './globals.css'
 
@@ -45,15 +43,7 @@ export default async function RootLayout({
       </head>
       <body className={`bg-bg font-body text-fg`}>
         <NavBar title={data?.siteTitle ?? 'My Site'} />
-        {draftMode().isEnabled && (
-          <div>
-            <a className='p-4 bg-blue-300 block' href='/api/disable-draft'>
-              Disable preview mode
-            </a>
-          </div>
-        )}
         {children}
-        {draftMode().isEnabled && <VisualEditing />}
       </body>
     </html>
   )
