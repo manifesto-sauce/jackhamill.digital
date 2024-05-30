@@ -1,0 +1,7 @@
+node_modules
+
+.next
+.sanity
+dist
+**/.DS_Store
+.DS_Store
