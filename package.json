@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "start": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
+    "start": "next start",
     "lint": "next lint",
     "build-cloudflare": "npx @cloudflare/next-on-pages@1",
     "install:sanity": "cd sanity && pnpm install",
