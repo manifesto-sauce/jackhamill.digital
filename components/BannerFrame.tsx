@@ -1,7 +1,7 @@
 import { BannerInfo, Color } from '@/sanity/sanity-types'
 import { SanityImage } from 'sanity-image'
 import SanityImageWrapper from './SanityImageWrapper'
-import { sanityFileURL } from '@/sanity/queries/utilities'
+import { sanityFileInfo } from '@/sanity/queries/utilities'
 
 const assembleGradient = (gradient: {
   type: 'radial' | 'diagonal' | 'horizontal' | 'vertical'
@@ -42,7 +42,7 @@ export default function BannerFrame({ banner }: { banner: BannerInfo }) {
             muted
             loop
             autoPlay
-            src={sanityFileURL(banner.video.asset._ref)}></video>
+            src={sanityFileInfo(banner.video.asset._ref).url}></video>
         )
       )
     case 'gradient':

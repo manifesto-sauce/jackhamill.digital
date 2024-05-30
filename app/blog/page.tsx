@@ -1,3 +1,4 @@
+import LinkFrame from '@/components/LinkFrame'
 import Section from '@/components/Section'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { postsQuery } from '@/sanity/queries'
@@ -10,13 +11,12 @@ export default async function Page() {
   return (
     <Section>
       {posts.map(post => (
-        <div>
-          <div>
-            <Link href={`blog/${post.slug.current}`}>{post.title}</Link>
-          </div>
-          <sub>{post.subtitle}</sub>
-          <div>{post.date}</div>
-        </div>
+        <LinkFrame
+          key={post._id}
+          title={post.title}
+          subtitle={post.subtitle}
+          href={`blog/${post.slug}`}
+        />
       ))}
     </Section>
   )

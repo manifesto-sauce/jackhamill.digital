@@ -26,7 +26,7 @@ const service = defineType({
       type: 'bannerInfo'
     }),
     defineField({
-      name: 'description',
+      name: 'content',
       type: 'content'
     })
   ]

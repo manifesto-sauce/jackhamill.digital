@@ -17,6 +17,8 @@ export default async function Works({
     params: { slug: params.project }
   })
   invariant(work)
+  console.log(params)
+
   const to = `/work/${params.service}`
 
   return (

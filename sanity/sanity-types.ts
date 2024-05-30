@@ -102,7 +102,18 @@ export type ImageInfo = {
 
 export type AssetInfo = {
   _type: "assetInfo";
-  assetType: "link" | "file";
+  assetType: "link" | "image" | "file" | "html";
+  imageSource?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   uploadSource?: {
     asset?: {
       _ref: string;
@@ -113,6 +124,7 @@ export type AssetInfo = {
     _type: "file";
   };
   linkSource?: string;
+  htmlSource?: string;
   embed?: boolean;
   title?: string;
   description?: string;
@@ -191,56 +203,6 @@ export type About = {
   };
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageAsset = {
-  _id: string;
-  _type: "sanity.imageAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  metadata?: SanityImageMetadata;
-  source?: SanityAssetSourceData;
-};
-
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Projects = {
   _id: string;
   _type: "projects";
@@ -311,7 +273,57 @@ export type Services = {
   order?: number;
   slug: Slug;
   banner?: BannerInfo;
-  description?: Content;
+  content?: Content;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type SanityImageAsset = {
+  _id: string;
+  _type: "sanity.imageAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -403,6 +415,7 @@ export type HslaColor = {
   a?: number;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: queries/index.ts
 // Variable: settingsQuery
 // Query: *[_type == 'settings'][0]
@@ -423,8 +436,9 @@ export type SettingsQueryResult = {
   headingFont?: FontInfo;
 } | null;
 // Variable: postsQuery
-// Query: *[_type == 'posts']{title, banner, 'slug': slug.current, subtitle, date, 'category': category->slug.current}
+// Query: *[_type == 'posts']{_id, title, banner, 'slug': slug.current, subtitle, date, 'category': category->slug.current}
 export type PostsQueryResult = Array<{
+  _id: string;
   title: string;
   banner: BannerInfo | null;
   slug: string;
@@ -433,33 +447,32 @@ export type PostsQueryResult = Array<{
   category: string | null;
 }>;
 // Variable: postQuery
-// Query: *[_type == 'posts' && slug.current == $slug][0]{..., title, banner, 'slug': slug.current, subtitle, date, 'category': category->slug.current }
+// Query: *[_type == 'posts' && slug.current == $slug][0]{_id, title, banner, 'slug': slug.current, subtitle, date, 'category': category->slug.current, content }
 export type PostQueryResult = {
   _id: string;
-  _type: "posts";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
   title: string;
-  subtitle: string | null;
-  slug: string;
-  category: string | null;
-  date: string;
   banner: BannerInfo | null;
+  slug: string;
+  subtitle: string | null;
+  date: string;
+  category: string | null;
   content: Content;
 } | null;
 // Variable: eventsQuery
-// Query: *[_type == 'events']{'slug': slug.current, title, subtitle,banner, 'category': category->slug.current}
+// Query: *[_type == 'events']{_id, 'slug': slug.current, title, subtitle, banner, date, 'category': category->slug.current}
 export type EventsQueryResult = Array<{
+  _id: string;
   slug: string;
   title: string;
   subtitle: string | null;
   banner: BannerInfo | null;
+  date: string;
   category: string | null;
 }>;
 // Variable: eventQuery
-// Query: *[_type == 'events' && slug.current == $slug][0]{  title, subtitle, banner, content, date, 'slug': slug.current, 'category': category->slug.current}
+// Query: *[_type == 'events' && slug.current == $slug][0]{  _id, title, subtitle, banner, content, date, 'slug': slug.current, 'category': category->slug.current}
 export type EventQueryResult = {
+  _id: string;
   title: string;
   subtitle: string | null;
   banner: BannerInfo | null;
@@ -485,7 +498,7 @@ export type ServiceQueryResult = {
   order: number | null;
   title: string | null;
   slug: string;
-  content: null;
+  content: Content | null;
 } | null;
 // Variable: projectsQuery
 // Query: *[_type == 'projects' && category->slug.current == $type]{  _id, title, subtitle, banner, date, 'slug': slug.current, 'category': category->slug.current}
@@ -511,7 +524,7 @@ export type ProjectQueryResult = {
   content: Content | null;
 } | null;
 // Variable: aboutQuery
-// Query: *[_type == 'about'][0] { ... }
+// Query: *[_type == 'about'][0]
 export type AboutQueryResult = {
   _id: string;
   _type: "about";
@@ -551,3 +564,4 @@ export type AboutQueryResult = {
     _type: "file";
   };
 } | null;
+

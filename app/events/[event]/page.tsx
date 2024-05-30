@@ -2,24 +2,23 @@ import ContentFrame from '@/components/ContentFrame'
 import Section from '@/components/Section'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { eventQuery, postQuery } from '@/sanity/queries'
-import { PostQueryResult } from '@/sanity/sanity-types'
+import { EventQueryResult, PostQueryResult } from '@/sanity/sanity-types'
 import invariant from 'tiny-invariant'
 
-export default async function Post({ params }) {
-  const postData = await sanityFetch<PostQueryResult>({
+export default async function Event({ params }) {
+  const event = await sanityFetch<EventQueryResult>({
     query: eventQuery,
     params: { slug: params.event }
   })
-  invariant(postData)
+  invariant(event)
   return (
     <>
       <Section>
-        <div>{postData.title}</div>
-        {postData.subtitle && <div>{postData.subtitle}</div>}
+        <div>{event.title}</div>
+        {event.subtitle && <div>{event.subtitle}</div>}
       </Section>
-      <Section>
-        <ContentFrame content={postData.content}></ContentFrame>
-      </Section>
+
+      {event.content && <ContentFrame content={event.content}></ContentFrame>}
     </>
   )
 }

@@ -14,10 +14,10 @@ export default async function Post({ params }) {
   return (
     <>
       <Section>
-        <div>{postData.title}</div>
+        <h1 className='text-h1'>{postData.title}</h1>
         {postData.subtitle && <div>{postData.subtitle}</div>}
       </Section>
-      <Section>
+      <Section className='mt-8'>
         <ContentFrame content={postData.content}></ContentFrame>
       </Section>
     </>

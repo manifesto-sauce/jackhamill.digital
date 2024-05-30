@@ -3,9 +3,9 @@ import Section from '@/components/Section'
 import ViewButton from '@/components/ViewButton'
 import { sanityFetch } from '@/sanity/lib/fetch'
 import { aboutQuery } from '@/sanity/queries'
+import { sanityFileInfo } from '@/sanity/queries/utilities'
 import { AboutQueryResult } from '@/sanity/sanity-types'
 import { PortableText } from '@portabletext/react'
-import groq from 'groq'
 import invariant from 'tiny-invariant'
 
 export default async function About() {
@@ -23,7 +23,11 @@ export default async function About() {
       </div>
 
       <PortableText value={about.bio!} />
-      {about.cv && <ViewButton href={about.bioURL!}>CV</ViewButton>}
+      {about.cv && (
+        <ViewButton href={sanityFileInfo(about.cv!.asset!._ref!).url}>
+          CV
+        </ViewButton>
+      )}
     </Section>
   )
 }
