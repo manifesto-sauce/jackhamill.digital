@@ -32,7 +32,8 @@ export default async function Service({
         </Section>
       )}
 
-      <Section innerClassName='sm:flex flex-wrap'>
+      <Section innerClassName=''>
+        {/* LinkFrame is the container for works, customize the classes to change things */}
         {projects.map(project => (
           <LinkFrame
             key={project._id}
@@ -40,7 +41,7 @@ export default async function Service({
             title={project.title}
             subtitle={project.subtitle}
             banner={project.banner}
-            className='p-4 aspect-square w-full sm:w-1/2'
+            className='p-4 aspect-square w-full'
             innerClassName='border border-accent h-full w-full p-4 rounded hover:bg-accent/30 transition-colors duration-300 relative'
           />
         ))}

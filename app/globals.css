@@ -33,6 +33,10 @@
   .button {
     @apply p-2 rounded-lg bg-accent2 text-bg font-heading;
   }
+
+  .heading {
+    
+  }
 }
 
 @layer utilities {

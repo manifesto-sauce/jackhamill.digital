@@ -12,17 +12,15 @@ export default function WorksHeader({
 }) {
   const selectedService = useSelectedLayoutSegment()
   return (
-    <Section>
-      <div className={`flex items-center w-full justify-around`}>
-        {services.map(service => (
-          <Link
-            href={`/work/${service.slug}`}
-            key={service._id}
-            className={`${selectedService === service.slug ? 'font-bold' : ''} font-heading`}>
-            {service.title}
-          </Link>
-        ))}
-      </div>
-    </Section>
+    <div className={`w-[150px] px-4`}>
+      {services.map(service => (
+        <Link
+          href={`/work/${service.slug}`}
+          key={service._id}
+          className={`${selectedService === service.slug ? 'font-bold' : ''} font-heading block`}>
+          {service.title}
+        </Link>
+      ))}
+    </div>
   )
 }
