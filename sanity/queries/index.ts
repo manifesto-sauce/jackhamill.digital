@@ -11,7 +11,7 @@ export const servicesQuery = groq`*[_type == 'services']{ _id, banner, order, ti
 export const serviceQuery = groq`*[_type == 'services' && slug.current == $slug][0]{
   _id, banner, order, title, 'slug': slug.current, content
 }`
-export const projectsQuery = groq`*[_type == 'projects' && category->slug.current == $type]{
+export const projectsQuery = groq`*[_type == 'projects']{
   _id, title, subtitle, banner, date, 'slug': slug.current, 'category': category->slug.current
 }`
 export const projectQuery = groq`*[_type == 'projects' && slug.current == $slug][0]{

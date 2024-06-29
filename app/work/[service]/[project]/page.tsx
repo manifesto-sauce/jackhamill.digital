@@ -19,7 +19,9 @@ export default async function Works({
   invariant(work)
   console.log(params)
 
-  const to = `/work/${params.service}`
+  const to = `/work${params.service ? `/${params.service}` : ''}`
+
+  console.log('SERVICECOMPONENT')
 
   return (
     <div className='fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black/50 p-8 backdrop-blur-sm'>

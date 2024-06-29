@@ -22,6 +22,10 @@
 }
 
 @layer components {
+  .textBox {
+    @apply w-full p-4 bg-bg2/50 backdrop-blur my-2 rounded-lg;
+  }
+
   .section {
     @apply max-w-2xl mx-auto;
   }
@@ -35,7 +39,15 @@
   }
 
   .heading {
-    
+    @apply text-fg tracking-wide uppercase;
+    text-shadow: 2px 2px black;
+  }
+
+  .heading-accent {
+    @apply text-black tracking-wider uppercase;
+    text-shadow:
+      1px 1px white,
+      -1px -1px white;
   }
 }
 

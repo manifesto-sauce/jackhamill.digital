@@ -5,6 +5,29 @@ const about = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'socials',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'Site',
+              type: 'string',
+              options: {
+                list: ['Instagram', 'Facebook', 'X', 'SoundCloud'],
+                layout: 'dropdown'
+              }
+            },
+            {
+              name: 'Handle',
+              type: 'string'
+            }
+          ]
+        }
+      ]
+    }),
+    defineField({
       name: 'bio',
       type: 'array',
       of: [{ type: 'description' }],
@@ -14,6 +37,11 @@ const about = defineType({
       name: 'headshot',
       type: 'image',
       validation: rule => rule.required()
+    }),
+    defineField({
+      name: 'work',
+      type: 'array',
+      of: [{ type: 'workInfo' }]
     }),
     defineField({
       name: 'cv',

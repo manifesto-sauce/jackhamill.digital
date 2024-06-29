@@ -16,13 +16,8 @@ export default async function Service({
       slug: params.service
     }
   })
+
   invariant(service)
-  const projects = await sanityFetch<ProjectsQueryResult>({
-    query: projectsQuery,
-    params: {
-      type: params.service
-    }
-  })
 
   return (
     <>
@@ -32,20 +27,6 @@ export default async function Service({
         </Section>
       )}
 
-      <Section innerClassName=''>
-        {/* LinkFrame is the container for works, customize the classes to change things */}
-        {projects.map(project => (
-          <LinkFrame
-            key={project._id}
-            href={`/work/${params.service}/${project.slug}`}
-            title={project.title}
-            subtitle={project.subtitle}
-            banner={project.banner}
-            className='p-4 aspect-square w-full'
-            innerClassName='border border-accent h-full w-full p-4 rounded hover:bg-accent/30 transition-colors duration-300 relative'
-          />
-        ))}
-      </Section>
       {children}
     </>
   )

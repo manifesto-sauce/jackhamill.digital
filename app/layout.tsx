@@ -14,11 +14,14 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({
-  children
+  children,
+  params
 }: Readonly<{
   children: React.ReactNode
+  params
 }>) {
   const data = await sanityFetch<SettingsQueryResult>({ query: settingsQuery })
+  console.log('params', params)
 
   const style = {
     '--bg': formatColor(data?.backgroundColor!),

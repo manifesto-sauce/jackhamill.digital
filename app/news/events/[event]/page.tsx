@@ -6,19 +6,22 @@ import { EventQueryResult, PostQueryResult } from '@/sanity/sanity-types'
 import invariant from 'tiny-invariant'
 
 export default async function Event({ params }) {
-  const event = await sanityFetch<EventQueryResult>({
+  const eventData = await sanityFetch<EventQueryResult>({
     query: eventQuery,
     params: { slug: params.event }
   })
-  invariant(event)
+  invariant(eventData)
   return (
     <>
       <Section>
-        <div>{event.title}</div>
-        {event.subtitle && <div>{event.subtitle}</div>}
+        <h1 className='text-h1'>{eventData.title}</h1>
+        {eventData.subtitle && <div>{eventData.subtitle}</div>}
       </Section>
-
-      {event.content && <ContentFrame content={event.content}></ContentFrame>}
+      <Section className='mt-8'>
+        {eventData.content && (
+          <ContentFrame content={eventData.content}></ContentFrame>
+        )}
+      </Section>
     </>
   )
 }

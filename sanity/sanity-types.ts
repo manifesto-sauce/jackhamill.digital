@@ -46,6 +46,42 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type WorkInfo = {
+  _type: "workInfo";
+  name?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "description";
+    _key: string;
+  }>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    photoCredit?: string;
+    _type: "imageInfo";
+  };
+};
+
 export type RawAssetInfo = {
   _type: "rawAssetInfo";
   name?: string;
@@ -169,6 +205,11 @@ export type About = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  socials?: Array<{
+    Site?: "Instagram" | "Facebook" | "X" | "SoundCloud";
+    Handle?: string;
+    _key: string;
+  }>;
   bio: Array<{
     _key: string;
   } & Description>;
@@ -183,6 +224,9 @@ export type About = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  work?: Array<{
+    _key: string;
+  } & WorkInfo>;
   cv?: {
     asset?: {
       _ref: string;
@@ -501,7 +545,7 @@ export type ServiceQueryResult = {
   content: Content | null;
 } | null;
 // Variable: projectsQuery
-// Query: *[_type == 'projects' && category->slug.current == $type]{  _id, title, subtitle, banner, date, 'slug': slug.current, 'category': category->slug.current}
+// Query: *[_type == 'projects']{  _id, title, subtitle, banner, date, 'slug': slug.current, 'category': category->slug.current}
 export type ProjectsQueryResult = Array<{
   _id: string;
   title: string;
@@ -531,6 +575,11 @@ export type AboutQueryResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  socials?: Array<{
+    Site?: "Facebook" | "Instagram" | "SoundCloud" | "X";
+    Handle?: string;
+    _key: string;
+  }>;
   bio: Array<{
     _key: string;
   } & Description>;
@@ -545,6 +594,9 @@ export type AboutQueryResult = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  work?: Array<{
+    _key: string;
+  } & WorkInfo>;
   cv?: {
     asset?: {
       _ref: string;

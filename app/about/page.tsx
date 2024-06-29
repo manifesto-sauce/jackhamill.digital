@@ -6,28 +6,45 @@ import { aboutQuery } from '@/sanity/queries'
 import { sanityFileInfo } from '@/sanity/queries/utilities'
 import { AboutQueryResult } from '@/sanity/sanity-types'
 import { PortableText } from '@portabletext/react'
+import { Hydra, Reactive } from 'reactive-frames'
 import invariant from 'tiny-invariant'
+import Client from './client'
+import Socials from '@/components/Socials'
 
 export default async function About() {
   const about = await sanityFetch<AboutQueryResult>({ query: aboutQuery })
   invariant(about)
+  console.log(about)
 
   return (
-    <Section>
-      <div className='w-[50%] max-w-[300px] float-left mr-4 mb-4'>
-        <SanityImageWrapper
-          // Pass the Sanity Image ID (`_id`) (e.g., `image-abcde12345-1200x800-jpg`)
-          id={about.headshot!.asset!._ref}
-          className='w-full h-full rounded-lg'
-        />
-      </div>
-
-      <PortableText value={about.bio!} />
-      {about.cv && (
-        <ViewButton href={sanityFileInfo(about.cv!.asset!._ref!).url}>
-          CV
-        </ViewButton>
-      )}
-    </Section>
+    <>
+      <Client />
+      <Section className=''>
+        <div className='w-full px-2 flex flex-col items-center'>
+          <SanityImageWrapper
+            // Pass the Sanity Image ID (`_id`) (e.g., `image-abcde12345-1200x800-jpg`)
+            id={about.headshot!.asset!._ref}
+            className='w-full rounded-lg max-w-[300px]'
+          />
+          <Socials socials={about.socials} />
+        </div>
+        <div className='textBox'>
+          <PortableText value={about.bio!} />
+        </div>
+        {about.work?.map(project => (
+          <div key={project._key} className='textBox'>
+            <h2 className='text-h3'>{project.name}</h2>
+            {project.description && (
+              <PortableText value={project.description} />
+            )}
+          </div>
+        ))}
+        {about.cv && (
+          <ViewButton href={sanityFileInfo(about.cv!.asset!._ref!).url}>
+            CV
+          </ViewButton>
+        )}
+      </Section>
+    </>
   )
 }

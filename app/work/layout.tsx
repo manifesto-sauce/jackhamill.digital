@@ -1,34 +1,30 @@
-'use client'
-
 import { sanityFetch } from '@/sanity/lib/fetch'
-import { servicesQuery } from '@/sanity/queries'
-import { ServicesQueryResult } from '@/sanity/sanity-types'
+import { projectsQuery, servicesQuery } from '@/sanity/queries'
+import { ProjectsQueryResult, ServicesQueryResult } from '@/sanity/sanity-types'
 import WorksHeader from './header'
-import { Reactive, Hydra } from 'reactive-frames'
+import Client from './client'
+import Works from './works'
 
 export default async function Work({ children }) {
   const services = await sanityFetch<ServicesQueryResult>({
     query: servicesQuery
   })
 
+  const projects = await sanityFetch<ProjectsQueryResult>({
+    query: projectsQuery
+  })
+
   return (
     <>
       {/*  header for categories */}
-      <Reactive className='fixed top-0 left-0 h-screen w-screen'>
-        <Hydra
-          name='h'
-          setup={self => {
-            self.osc(12, 10).out()
-          }}
-          draw={self => self.tick()}
-        />
-      </Reactive>
-      <div className='flex w-full h-full'>
+      <Client />
+      <div className='flex w-full h-[calc(100vh-64px)]'>
         <WorksHeader services={services} />
         <div className='w-[66%] flex-none h-full overflow-y-auto'>
-          {children}
+          {<Works projects={projects} />}
         </div>
       </div>
+      {children}
     </>
   )
 }

@@ -11,6 +11,7 @@ import description from './type/description'
 import fontInfo from './type/fontInfo'
 import imageInfo from './type/imageInfo'
 import rawAssetInfo from './type/rawAssetInfo'
+import workInfo from './type/workInfo'
 
 const documents = [event, post, project, service]
 
@@ -23,7 +24,8 @@ const types = [
   description,
   imageInfo,
   rawAssetInfo,
-  fontInfo
+  fontInfo,
+  workInfo
 ]
 
 export const schema = {
