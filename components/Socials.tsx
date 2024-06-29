@@ -5,8 +5,6 @@ export default function Socials({
 }: {
   socials: AboutQueryResult['socials']
 }) {
-  console.log('socials are', socials)
-
   return (
     <>
       <div>
