@@ -15,7 +15,7 @@ const about = defineType({
               name: 'Site',
               type: 'string',
               options: {
-                list: ['Instagram', 'Facebook', 'X', 'SoundCloud'],
+                list: ['Instagram', 'Facebook', 'X', 'SoundCloud', 'Bandcamp'],
                 layout: 'dropdown'
               }
             },

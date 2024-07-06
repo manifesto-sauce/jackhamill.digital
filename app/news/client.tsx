@@ -6,7 +6,7 @@ export default function Client() {
     <Reactive className='fixed top-0 left-0 h-screen w-screen -z-10'>
       <Hydra
         name='h'
-        className='h-full w-full'
+        className='fixed top-0 left-0 h-screen w-screen -z-10'
         draw={h => {
           const { o0, o1, o2, o3 } = h
           h.noise(3, 0.3, 3).thresh(0.3, 0.03).diff(o3, 0.3).out(o1)

@@ -23,7 +23,7 @@
 
 @layer components {
   .textBox {
-    @apply w-full p-4 bg-bg2/50 backdrop-blur my-2 rounded-lg;
+    @apply w-full p-4 bg-bg2/80 backdrop-blur my-2 rounded-lg;
   }
 
   .section {
@@ -36,6 +36,10 @@
 
   .button {
     @apply p-2 rounded-lg bg-accent2 text-bg font-heading;
+  }
+
+  .accent-button {
+    @apply rounded-lg bg-accent2 hover:bg-accent transition-colors duration-200 aspect-square h-8 w-8;
   }
 
   .heading {

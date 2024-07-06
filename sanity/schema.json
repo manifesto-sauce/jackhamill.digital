@@ -1233,6 +1233,10 @@
                     {
                       "type": "string",
                       "value": "SoundCloud"
+                    },
+                    {
+                      "type": "string",
+                      "value": "Bandcamp"
                     }
                   ]
                 },

@@ -206,7 +206,7 @@ export type About = {
   _updatedAt: string;
   _rev: string;
   socials?: Array<{
-    Site?: "Instagram" | "Facebook" | "X" | "SoundCloud";
+    Site?: "Instagram" | "Facebook" | "X" | "SoundCloud" | "Bandcamp";
     Handle?: string;
     _key: string;
   }>;
@@ -479,6 +479,15 @@ export type SettingsQueryResult = {
   bodyFont?: FontInfo;
   headingFont?: FontInfo;
 } | null;
+// Variable: socialsQuery
+// Query: *[_type == 'about']{socials}[0]
+export type SocialsQueryResult = {
+  socials: Array<{
+    Site?: "Bandcamp" | "Facebook" | "Instagram" | "SoundCloud" | "X";
+    Handle?: string;
+    _key: string;
+  }> | null;
+} | null;
 // Variable: postsQuery
 // Query: *[_type == 'posts']{_id, title, banner, 'slug': slug.current, subtitle, date, 'category': category->slug.current}
 export type PostsQueryResult = Array<{
@@ -576,7 +585,7 @@ export type AboutQueryResult = {
   _updatedAt: string;
   _rev: string;
   socials?: Array<{
-    Site?: "Facebook" | "Instagram" | "SoundCloud" | "X";
+    Site?: "Bandcamp" | "Facebook" | "Instagram" | "SoundCloud" | "X";
     Handle?: string;
     _key: string;
   }>;

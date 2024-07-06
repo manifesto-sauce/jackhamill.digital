@@ -26,12 +26,12 @@ export default async function About() {
             id={about.headshot!.asset!._ref}
             className='w-full rounded-lg max-w-[300px]'
           />
-          <Socials socials={about.socials} />
         </div>
         <div className='textBox'>
           <PortableText value={about.bio!} />
         </div>
-        {about.work?.map(project => (
+        {// map the array of work experiences to div elements to display them
+        about.work?.map(project => (
           <div key={project._key} className='textBox'>
             <h2 className='text-h3'>{project.name}</h2>
             {project.description && (

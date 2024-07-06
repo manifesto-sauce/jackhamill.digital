@@ -7,7 +7,7 @@ export default function Client() {
     <Reactive className='h-screen w-screen fixed top-0 left-0 -z-10'>
       <Hydra
         name='hydra'
-        className='h-full w-full'
+        className='h-screen w-screen fixed top-0 left-0 -z-10'
         draw={self => {
           self.osc().modulateRotate(self.o0, 0.3).out()
           self.osc(33, 0.3, 0.3).diff(self.o3, 3).out(self.o1)

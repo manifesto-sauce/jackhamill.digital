@@ -10,22 +10,20 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
 
   return (
     <>
-      <Section innerClassName=''>
-        {/* LinkFrame is the container for works, customize the classes to change things */}
-        {projects
-          .filter(project => !service || project.category === service)
-          .map(project => (
-            <LinkFrame
-              key={project._id}
-              href={`/work/${project.category}/${project.slug}`}
-              title={project.title}
-              subtitle={project.subtitle}
-              banner={project.banner}
-              className='p-4 aspect-square w-full'
-              innerClassName='border border-accent h-full w-full p-4 rounded hover:bg-accent/30 transition-colors duration-300 relative'
-            />
-          ))}
-      </Section>
+      {/* LinkFrame is the container for works, customize the classes to change things */}
+      {projects
+        .filter(project => !service || project.category === service)
+        .map(project => (
+          <LinkFrame
+            key={project._id}
+            href={`/work/${project.category}/${project.slug}`}
+            title={project.title}
+            subtitle={project.subtitle}
+            banner={project.banner}
+            className='p-4 aspect-square w-full md:w-1/2 lg:w-1/3'
+            innerClassName='border border-accent w-full aspect-square p-4 rounded hover:bg-accent/30 transition-colors duration-300 relative bg-black/50 backdrop-blur-lg'
+          />
+        ))}
     </>
   )
 }

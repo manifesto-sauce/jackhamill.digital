@@ -18,10 +18,10 @@ export default async function Work({ children }) {
     <>
       {/*  header for categories */}
       <Client />
-      <div className='flex w-full h-[calc(100vh-64px)]'>
+      <div className='sm:flex w-full h-[calc(100vh-32px)]'>
         <WorksHeader services={services} />
-        <div className='w-[66%] flex-none h-full overflow-y-auto'>
-          {<Works projects={projects} />}
+        <div className='w-full sm:w-[calc(100vw-150px)] flex-none h-full overflow-y-auto flex flex-wrap'>
+          <Works projects={projects} />
         </div>
       </div>
       {children}

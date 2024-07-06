@@ -1,7 +1,7 @@
 import { formatColor } from '@/sanity/lib/color'
 import { sanityFetch } from '@/sanity/lib/fetch'
-import { settingsQuery } from '@/sanity/queries'
-import { SettingsQueryResult } from '@/sanity/sanity-types'
+import { settingsQuery, socialsQuery } from '@/sanity/queries'
+import { SettingsQueryResult, SocialsQueryResult } from '@/sanity/sanity-types'
 import type { Metadata } from 'next'
 import NavBar from './NavBar'
 import './globals.css'
@@ -21,7 +21,7 @@ export default async function RootLayout({
   params
 }>) {
   const data = await sanityFetch<SettingsQueryResult>({ query: settingsQuery })
-  console.log('params', params)
+  const socials = await sanityFetch<SocialsQueryResult>({ query: socialsQuery })
 
   const style = {
     '--bg': formatColor(data?.backgroundColor!),
@@ -45,7 +45,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={`bg-bg font-body text-fg`}>
-        <NavBar title={data?.siteTitle ?? 'My Site'} />
+        <NavBar title={data?.siteTitle ?? 'My Site'} socials={socials} />
         {children}
       </body>
     </html>
