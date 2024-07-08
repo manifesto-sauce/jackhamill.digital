@@ -11,6 +11,9 @@ export default function Posts({ posts }: { posts: PostsQueryResult }) {
   return (
     <>
       <h1 className='text-h1 text-center heading'>Latest News</h1>
+      {
+        // Toggle between posts, so older ones can be loaded
+      }
       {posts.slice(start, start + 10).map(post => (
         <LinkFrame
           className='textBox'

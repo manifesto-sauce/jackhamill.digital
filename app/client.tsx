@@ -18,24 +18,35 @@ export default function Client() {
   >
   return (
     <Reactive className='fixed top-0 left-0 h-screen w-screen -z-10'>
+      {
+        // The Processing environment, powered by p5.js (https://p5js.org). Use this component to create the main background image of the homepage.
+      }
       <Processing
         name='p'
         type='p2d'
         className='h-full w-full absolute top-0 left-0'
+        /**
+         * @props p: the p5 instance, and {props}, the context object consisting of {time, props, elements}. See Reactive section of README.md for more.
+         */
         setup={async (p, { props }) => {
-          const pieces = ['futurist', 'manifesto']
+          /**
+           * A callback called whenever the mouse is moved.
+           */
           p.mouseMoved = ev => {
             invariant(ev)
+            // Edit the global props object in the context.
             props.mouseX = ev['clientX']
             props.mouseY = ev['clientY']
           }
-          await new Promise((res, rej) => {
+          // This is an asynchronous function because we have to load these images, so we wait for load before calling "res" to finish the function.
+          await new Promise((resolve, reject) => {
             let img1: Image, img2: Image
+            // If both images are loaded in, resolve.
             const checkCompletion = () => {
               if (img1 && img2) {
                 props.img1 = img1
                 props.img2 = img2
-                res(true)
+                resolve(true)
               }
             }
             p.loadImage('/img/futurist.png', image => {
@@ -61,6 +72,7 @@ export default function Client() {
           })
         }}
         draw={(p, { props, time }: Context) => {
+          // Don't draw until setup is completed
           if (!props.img1 || !props.img2 || !props.textStrings) return
           p.clear()
           p.fill('lightgreen')
@@ -68,6 +80,7 @@ export default function Client() {
 
           let i = 0
           const t = time * 100
+          // Draw each of the textStrings in the setup function
           for (let string of props.textStrings) {
             i++
             p.textSize(10 + (p.sin(i * 2.5249 + time) * 0.5 + 0.5) * 48)
@@ -78,6 +91,7 @@ export default function Client() {
             )
           }
 
+          // Draw the two album covers, moving around in response to mouse movement.
           p.image(
             props.img1,
             (props.mouseX + (((time / 3) * p.width) % (p.width / 2))) %
@@ -95,6 +109,10 @@ export default function Client() {
           )
         }}
       />
+      {
+        // A top layer of the background, that just has a little shader to draw horizontal lines. More about GLSL fragment shaders: https://webgl2fundamentals.org/webgl/lessons/webgl-shaders-and-glsl.html
+        // The filter shader is passed a vertex shader with that creates the vTexCoord parameter.
+      }
       <Processing
         type='webgl'
         name='overlay'
@@ -116,8 +134,6 @@ export default function Client() {
 
           shader.setUniform('time', time)
           shader.setUniform('height', p.height)
-          console.log(shader)
-
           p.filter(shader)
         }}
       />

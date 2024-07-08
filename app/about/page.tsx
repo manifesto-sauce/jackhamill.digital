@@ -6,15 +6,12 @@ import { aboutQuery } from '@/sanity/queries'
 import { sanityFileInfo } from '@/sanity/queries/utilities'
 import { AboutQueryResult } from '@/sanity/sanity-types'
 import { PortableText } from '@portabletext/react'
-import { Hydra, Reactive } from 'reactive-frames'
 import invariant from 'tiny-invariant'
 import Client from './client'
-import Socials from '@/components/Socials'
 
 export default async function About() {
   const about = await sanityFetch<AboutQueryResult>({ query: aboutQuery })
   invariant(about)
-  console.log(about)
 
   return (
     <>
