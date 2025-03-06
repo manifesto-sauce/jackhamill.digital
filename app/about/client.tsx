@@ -15,7 +15,7 @@ export default function Client() {
           self.osc(33, 0.3, 0.3).diff(self.o3, 3).out(self.o1)
           self
           //  .osc(3, 0.3, 33)
-          .osc(6, 0.3, 33)
+          .osc(3, 0.3, 33)
 
             .modulateKaleid(self.o3, 3)
             .diff(self.o0)
