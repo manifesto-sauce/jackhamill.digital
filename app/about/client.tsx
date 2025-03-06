@@ -18,7 +18,7 @@ export default function Client() {
             .modulateKaleid(self.o3, 3)
             .diff(self.o0)
             .out(self.o2)
-          self.src(self.o0, 3).mult(self.o1, 1000).kaleid(1000).out(self.o3)
+          self.src(self.o0, 3).mult(self.o1, 3).kaleid(3).out(self.o3)
           //          self.src(self.o0, 3).mult(self.o1, 3).kaleid(3).out(self.o3)
 
           self.render(self.o2)
