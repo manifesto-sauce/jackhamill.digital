@@ -9,8 +9,7 @@ export default function Client() {
         name='hydra'
         className='h-screen w-screen fixed top-0 left-0 -z-10'
         draw={self => {
-self.osc(10, 3, 1).out(self.o0);
-self.render(self.o0);         /*
+    
           // Initialize camera for texture input
           self.s0.initCam();
 
@@ -28,9 +27,9 @@ self.render(self.o0);         /*
 
           // Ensure rendering the final output
           self.render(self.o0);
-          */
+          
         }}
-        */
+        
       />
     </Reactive>
   );
