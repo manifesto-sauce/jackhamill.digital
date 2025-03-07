@@ -9,6 +9,7 @@ export default function Client() {
         name='hydra'
         className='h-screen w-screen fixed top-0 left-0 -z-10'
         draw={self => {
+self.s0.initCam();
 
 self.osc(5)
   .modulate(self.src(self.s0), 1)
