@@ -61,11 +61,11 @@ export default function Client() {
             props.textStrings = [
               'composer',
               'performer',
-              'media artist',
-              '3 hands',
-              '4 legs',
-              'Extraordinary!',
-              'Magnificent!'
+              'teacher'
+              'improviser',
+              'programmer',
+              'video artist',
+              'some guy'
             ]
 
             p.textFont('Andale Mono')
