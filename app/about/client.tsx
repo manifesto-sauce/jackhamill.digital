@@ -28,6 +28,7 @@ self.render(self.o0);         /*
 
           // Ensure rendering the final output
           self.render(self.o0);
+          */
         }}
         */
       />
