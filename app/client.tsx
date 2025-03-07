@@ -62,6 +62,7 @@ export default function Client() {
               'Composer',
               'Performer',
               'Teacher',
+              'Musician?',
               'Improviser',
               'Programmer',
               'Video Artist',
