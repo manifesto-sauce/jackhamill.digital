@@ -35,6 +35,9 @@ export default function Client() {
             props.mouseY = ev.clientY
           }
 
+          // Triggering an initial sound to allow audio playback
+          playSilentSound()
+
           await new Promise((resolve) => {
             let img1: Image, img2: Image
 
@@ -161,4 +164,11 @@ function playSound(word) {
 
   audioCache[word].currentTime = 0
   audioCache[word].play()
+}
+
+// Play a silent sound on page load to bypass autoplay restrictions
+function playSilentSound() {
+  const silentAudio = new Audio()
+  silentAudio.src = '/sounds/silent.mp3' // Add a silent audio file (you can create this or use an empty .mp3)
+  silentAudio.play()
 }
