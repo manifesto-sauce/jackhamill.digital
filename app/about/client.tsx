@@ -19,7 +19,7 @@ self.osc(5)
     30
   )
   .brightness(-0.9)
-  .contrast(0.5)*/
+  .contrast(0.5)
   .out(self.o0);
 
 self.render(self.o0);
