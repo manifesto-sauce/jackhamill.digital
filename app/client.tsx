@@ -4,8 +4,11 @@ import type { Image } from 'p5'
 import { Processing, Reactive } from 'reactive-frames'
 import { ReactiveContext } from 'reactive-frames/dist/types'
 import invariant from 'tiny-invariant'
+import { useState } from 'react'
 
 export default function Client() {
+  const [entered, setEntered] = useState(false)
+
   type Context = ReactiveContext<
     {},
     {
@@ -18,125 +21,140 @@ export default function Client() {
     }
   >
 
+  const handleClick = () => {
+    setEntered(true)
+    playSilentSound() // Play silent sound to bypass autoplay restrictions
+  }
+
   return (
     <Reactive className="fixed top-0 left-0 h-screen w-screen -z-10">
-      <Processing
-        name="p"
-        type="p2d"
-        className="h-full w-full absolute top-0 left-0"
-        setup={async (p, { props }) => {
-          props.mouseX = 0
-          props.mouseY = 0
-          props.textPositions = []
+      {/* Display "Click to Enter" screen */}
+      {!entered && (
+        <div
+          className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50"
+          onClick={handleClick}
+        >
+          <span className="text-white text-3xl">Click to Enter</span>
+        </div>
+      )}
 
-          p.mouseMoved = (ev) => {
-            invariant(ev)
-            props.mouseX = ev.clientX
-            props.mouseY = ev.clientY
-          }
+      {/* Main content */}
+      {entered && (
+        <Processing
+          name="p"
+          type="p2d"
+          className="h-full w-full absolute top-0 left-0"
+          setup={async (p, { props }) => {
+            props.mouseX = 0
+            props.mouseY = 0
+            props.textPositions = []
 
-          // Triggering an initial sound to allow audio playback
-          playSilentSound()
+            p.mouseMoved = (ev) => {
+              invariant(ev)
+              props.mouseX = ev.clientX
+              props.mouseY = ev.clientY
+            }
 
-          await new Promise((resolve) => {
-            let img1: Image, img2: Image
+            await new Promise((resolve) => {
+              let img1: Image, img2: Image
 
-            const checkCompletion = () => {
-              if (img1 && img2) {
-                props.img1 = img1
-                props.img2 = img2
-                resolve(true)
+              const checkCompletion = () => {
+                if (img1 && img2) {
+                  props.img1 = img1
+                  props.img2 = img2
+                  resolve(true)
+                }
+              }
+
+              p.loadImage('/img/futurist.png', (image) => {
+                img1 = image
+                checkCompletion()
+              })
+              p.loadImage('/img/manifesto.png', (image) => {
+                img2 = image
+                checkCompletion()
+              })
+
+              props.textStrings = [
+                'Composer',
+                'Performer',
+                'Teacher',
+                'Music man',
+                'Improviser',
+                'Programmer',
+                'Sound Artist',
+                'Some Guy',
+                'Media Artist',
+              ]
+
+              p.textFont('Andale Mono')
+            })
+          }}
+          draw={(p, { props, time }: Context) => {
+            if (!props.img1 || !props.img2 || !props.textStrings) return
+            p.clear()
+            p.fill('lightgreen')
+            p.noStroke()
+
+            let i = 0
+            const t = time * 100
+            props.textPositions = []
+
+            for (let string of props.textStrings) {
+              i++
+              const textSize =
+                10 + (p.sin(i * 2.5249 + time) * 0.5 + 0.5) * 48
+              p.textSize(textSize)
+
+              const xPos = (i * t) % (p.width / 2)
+              const yPos = (i * t + 0.5 * 100) % (p.height / 2)
+
+              // Track word bounding box (x, y, width, height)
+              const wordWidth = p.textWidth(string)
+              const wordHeight = textSize
+
+              props.textPositions.push({
+                x: xPos,
+                y: yPos - wordHeight / 2, // Adjust so text isn't shifted
+                width: wordWidth,
+                height: wordHeight,
+                word: string,
+              })
+
+              p.text(string, xPos, yPos)
+            }
+
+            p.image(
+              props.img1,
+              (props.mouseX + (((time / 3) * p.width) % (p.width / 2))) %
+                (p.width / 2),
+              (props.mouseY * 2) % (p.height / 2),
+              100,
+              100
+            )
+            p.image(
+              props.img2,
+              props.mouseY + (((time / 3) * p.width) % (p.width / 2)) * -1,
+              props.mouseX,
+              100,
+              100
+            )
+
+            // Hover detection for playing sound
+            const hoverThreshold = 10 // Range for detecting hover near the text
+            for (let { x, y, width, height, word } of props.textPositions) {
+              if (
+                props.mouseX >= x &&
+                props.mouseX <= x + width &&
+                props.mouseY >= y - height / 2 &&
+                props.mouseY <= y + height / 2
+              ) {
+                playSound(word)
               }
             }
-
-            p.loadImage('/img/futurist.png', (image) => {
-              img1 = image
-              checkCompletion()
-            })
-            p.loadImage('/img/manifesto.png', (image) => {
-              img2 = image
-              checkCompletion()
-            })
-
-            props.textStrings = [
-              'Composer',
-              'Performer',
-              'Teacher',
-              'Music man',
-              'Improviser',
-              'Programmer',
-              'Sound Artist',
-              'Some Guy',
-              'Media Artist',
-            ]
-
-            p.textFont('Andale Mono')
-          })
-        }}
-        draw={(p, { props, time }: Context) => {
-          if (!props.img1 || !props.img2 || !props.textStrings) return
-          p.clear()
-          p.fill('lightgreen')
-          p.noStroke()
-
-          let i = 0
-          const t = time * 100
-          props.textPositions = []
-
-          for (let string of props.textStrings) {
-            i++
-            const textSize =
-              10 + (p.sin(i * 2.5249 + time) * 0.5 + 0.5) * 48
-            p.textSize(textSize)
-
-            const xPos = (i * t) % (p.width / 2)
-            const yPos = (i * t + 0.5 * 100) % (p.height / 2)
-
-            // Track word bounding box (x, y, width, height)
-            const wordWidth = p.textWidth(string)
-            const wordHeight = textSize
-
-            props.textPositions.push({
-              x: xPos,
-              y: yPos - wordHeight / 2, // Adjust so text isn't shifted
-              width: wordWidth,
-              height: wordHeight,
-              word: string,
-            })
-
-            p.text(string, xPos, yPos)
-          }
-
-          p.image(
-            props.img1,
-            (props.mouseX + (((time / 3) * p.width) % (p.width / 2))) %
-              (p.width / 2),
-            (props.mouseY * 2) % (p.height / 2),
-            100,
-            100
-          )
-          p.image(
-            props.img2,
-            props.mouseY + (((time / 3) * p.width) % (p.width / 2)) * -1,
-            props.mouseX,
-            100,
-            100
-          )
-
-          // Hover detection for playing sound
-          const hoverThreshold = 10 // Range for detecting hover near the text
-          for (let { x, y, width, height, word } of props.textPositions) {
-            if (
-              props.mouseX >= x &&
-              props.mouseX <= x + width &&
-              props.mouseY >= y - height / 2 &&
-              props.mouseY <= y + height / 2
-            ) {
-              playSound(word)
-            }
-          }
-        }}
-      />
+          }}
+        />
+      )}
     </Reactive>
   )
 }
