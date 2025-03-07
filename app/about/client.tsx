@@ -20,7 +20,7 @@ export default function Client() {
                 .modulatePixelate(self.noise(40, 0.2)),
               30
             )
-            .brightness(-0.9)
+            .brightness(0)
             .contrast(0.5)
             .out(self.o0);
 
