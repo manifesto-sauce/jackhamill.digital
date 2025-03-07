@@ -110,8 +110,8 @@ export default function Client() {
             100
           )
 
-          // Check for text hover
-          const hoverThreshold = 30
+          // Hover detection for playing sound
+          const hoverThreshold = 30 // Range for detecting hover near the text
           for (let { x, y, word } of props.textPositions) {
             if (
               Math.abs(props.mouseX - x) < hoverThreshold &&
