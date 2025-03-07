@@ -14,7 +14,7 @@ export default function Client() {
       mouseX: number
       mouseY: number
       textStrings: string[]
-      textPositions: { x: number; y: number; word: string }[]
+      textPositions: { x: number; y: number; width: number; height: number; word: string }[]
     }
   >
 
@@ -89,7 +89,17 @@ export default function Client() {
             const xPos = (i * t) % (p.width / 2)
             const yPos = (i * t + 0.5 * 100) % (p.height / 2)
 
-            props.textPositions.push({ x: xPos, y: yPos, word: string })
+            // Track word bounding box (x, y, width, height)
+            const wordWidth = p.textWidth(string)
+            const wordHeight = textSize
+
+            props.textPositions.push({
+              x: xPos,
+              y: yPos - wordHeight / 2, // Adjust so text isn't shifted
+              width: wordWidth,
+              height: wordHeight,
+              word: string,
+            })
 
             p.text(string, xPos, yPos)
           }
@@ -111,11 +121,13 @@ export default function Client() {
           )
 
           // Hover detection for playing sound
-          const hoverThreshold = 30 // Range for detecting hover near the text
-          for (let { x, y, word } of props.textPositions) {
+          const hoverThreshold = 10 // Range for detecting hover near the text
+          for (let { x, y, width, height, word } of props.textPositions) {
             if (
-              Math.abs(props.mouseX - x) < hoverThreshold &&
-              Math.abs(props.mouseY - y) < hoverThreshold
+              props.mouseX >= x &&
+              props.mouseX <= x + width &&
+              props.mouseY >= y - height / 2 &&
+              props.mouseY <= y + height / 2
             ) {
               playSound(word)
             }
