@@ -11,7 +11,7 @@ export default function Client() {
         draw={self => {
     self.s0.initCam();
 self.osc(5)
-  .modulate(self.src(self.s0), 0.1)
+  .modulate(self.src(self.s0), 1)
   .modulatePixelate(
     self.noise(2, 0.5)
       .modulatePixelate(self.noise(40, 0.2)),
