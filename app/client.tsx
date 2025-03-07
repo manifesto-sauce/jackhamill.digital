@@ -62,20 +62,13 @@ export default function Client() {
               'Composer',
               'Performer',
               'Teacher',
-              'Musician?',
+              'Music man',
               'Improviser',
               'Programmer',
-              'Video Artist',
               'Sound Artist',
               'Some Guy',
               'Media Artist',
-              'Introvert',
-              'Extrovert',
-              'Ambivert',
-              'Omnivert',
-              'Avert',
-              'Invert',
-              'Inverse'
+ 
             ]
 
             p.textFont('Andale Mono')
