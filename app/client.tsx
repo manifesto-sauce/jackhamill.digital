@@ -153,12 +153,12 @@ const wordAudioMap = {
 const audioCache = {}
 
 function playSound(word) {
+ // const minTime = 20.0;//20 ms
   if (!wordAudioMap[word]) return
 
   if (!audioCache[word]) {
     audioCache[word] = new Audio(wordAudioMap[word])
   }
-
   audioCache[word].currentTime = 0
   audioCache[word].play()
 }
