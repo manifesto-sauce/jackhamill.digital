@@ -14,7 +14,7 @@ export default function Client() {
             .modulateScrollX(self.osc(0.2).modulate(self.osc().rotate(), 0.2))
             .scale(0.5)
             .color(0.3, 0.014, 1)
-            .out();
+            .out(self(o0));
         }}
       />
     </Reactive>
