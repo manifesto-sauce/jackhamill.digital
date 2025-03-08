@@ -7,7 +7,7 @@ export default function Client() {
       <Hydra
         name="h"
         className="fixed top-0 left-0 h-screen w-screen -z-10"
-        draw={(h) => {
+        draw={(self) => {
           self.osc(2, 0.1)
             .modulate(self.noise(3), 0.4)
             .diff(self.o0)
