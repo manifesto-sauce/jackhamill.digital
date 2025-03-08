@@ -20,7 +20,7 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
             title={project.title}
             subtitle={project.subtitle}
             banner={project.banner}
-            className='p-4 aspect-square w-full md:w-1/7 lg:w-1/3'
+            className='p-4 aspect-square w-full md:w-1/2 lg:w-1/3'
             innerClassName='border border-accent w-full aspect-square p-4 rounded hover:bg-accent/30 transition-colors duration-300 relative bg-black/50 backdrop-blur-lg'
           />
         ))}
