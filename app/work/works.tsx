@@ -13,13 +13,13 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
       {/* LinkFrame is the container for works, customize the classes to change things */}
       {projects
         .filter(
-          project => !service || 
+         project => !service || 
             project.category === service
         )
         .map(project => (
           <LinkFrame
             key={project._id}
-            href={/work/${project.category}/${project.slug}}
+            href={`/work/${project.category}/${project.slug}`}
             title={project.title}
             subtitle={project.subtitle}
             banner={project.banner}
@@ -29,4 +29,4 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
         ))}
     </>
   )
-} 
+}
