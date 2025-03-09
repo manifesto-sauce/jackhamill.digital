@@ -12,7 +12,10 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
     <>
       {/* LinkFrame is the container for works, customize the classes to change things */}
       {projects
-        .filter(project => !service || project.category === service)
+        .filter(
+         // project => !service || 
+            project.category === service
+        )
         .map(project => (
           <LinkFrame
             key={project._id}
