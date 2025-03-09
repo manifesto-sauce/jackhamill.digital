@@ -28,7 +28,7 @@ export default function Works({ projects }: { projects: ProjectsQueryResult }) {
         </div>
       ) : (
         <div className="flex items-center justify-center min-h-[50vh]">
-          <p className="text-lg text-center text-gray-400">No projects found for this category.</p>
+          <p className="text-lg text-center text-gray-400">Sort by category on the left. "Compositions" are scored works, where I was not the only performer. "Performances" are improvisations and compositions where I was the performer. </p>
         </div>
       )}
     </>
