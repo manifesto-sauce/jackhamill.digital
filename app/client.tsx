@@ -63,7 +63,6 @@ export default function Client() {
               'Improviser',
               'Programmer',
               'Sound Artist',
-              'Some Guy',
               'Media Artist',
             ]
 
@@ -146,7 +145,6 @@ const wordAudioMap = {
   Improviser: '/sounds/improviser.mp3',
   Programmer: '/sounds/programmer.mp3',
   'Sound Artist': '/sounds/soundartist.mp3',
-  'Some Guy': '/sounds/someguy.mp3',
   'Media Artist': '/sounds/mediaartist.mp3',
 }
 
